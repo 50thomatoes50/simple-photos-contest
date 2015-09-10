@@ -16,7 +16,8 @@ if ($settings){
 		$contests[$row['contest']] = (object)array(	'contest_name'=> $row['contest_name'],
 																								'description' => $row['description'],
 																								'date_begin'	=> $row['date_begin'],
-																								'date_end'		=> $row['date_end']
+																								'date_end'		=> $row['date_end'],
+																								'icon'		=> $row['icon']
 																							);
 	}
 }
@@ -52,13 +53,13 @@ if ($settings){
 						<label><?php echo _('Password'); ?> : </label>
 						<input type="password" id="login_auth"/> <span id="log_send" class="fa fa-sign-in fa-2x" title="<?php echo _('Login'); ?>"></span>
 					</div>
-				</form> 
+				</form>
 			</div>
 				<?php
 			}
 			?>
 		</div>
-		<?php 
+		<?php
 		if (!$settings) {
 			/** If $settings is false, then there is no settings. Let's display a message ! */
 			$message = (object)array('type' => 'error', 'text' => _('It seems that you just installed Simple Photos Contest. Please click on the settings button and log in to configure this site.'));
@@ -70,8 +71,35 @@ if ($settings){
 		}else{
 			/** The first contest will be the default contest if none is set */
 			if (is_null($contest)){
+				echo '<div id="header"><a href="">'. sprintf($settings->contests_name, $contest);
+				echo '</a></div>';
+
 				reset($contests);
 				$contest = key($contests);
+				echo '<div id="contest_table" class="table">';
+				foreach ($contests as $key => $value) {?>
+					<ul class="item_wrap active">
+						<li class="item_title"><a title="<?php echo _('See contest'); ?>" href=".?contest=<?php echo $key; ?>"><?php if($value->icon)echo "<img alt='icon' src=photos/".$value->icon.">"; echo$value->contest_name; ?></a></li>
+						<li class="item_desc"><?php echo $value->description; ?></li>
+						<li class="item_dates"><?php echo sprintf(_('Contest open to votes between %s and %s'), '<span class="date_begin">'.date_formatting($value->date_begin).'</span>', '<span class="date_end">'.date_formatting($value->date_end).'</span>'); ?></li>
+					</ul>
+				<?php }
+				echo '</div>';
+				include "html/footer.html";
+				exit();
+			}
+			else
+			if(!array_key_exists($contest,$contests))
+			{
+				?>
+				<div id="header">This contest doesnt exist</div>
+				<div align="center">
+					<div class="contestStatus">
+						<h2><a href='index.php'>Go back</a></h2>
+					</div>
+				</div>
+				<?php include "html/footer.html";
+				exit();
 			}
 
 			/** That's all good, let's display the page. */
@@ -82,11 +110,11 @@ if ($settings){
 			/** @var bool $activeContest Is the contest active or not ? */
 			$activeContest = (time() >= mktime(0,0,0,$bmonth,$bday,$byear) and time() <= mktime(0,0,0,$emonth,$eday,$eyear)) ? true : false;
 		?>
-		<div id="header"><?php echo sprintf($settings->contest_disp_title, '<span class="header-contest">'.$contest.'</span>'); ?></div>
+		<div id="header"><a tiptitle="Back" href="index.php"><span class="fa fa-arrow-circle-o-left"></span></a><a href=""><?php echo sprintf($settings->contest_disp_title, '<span class="header-contest">'.$contest.'</span>'); ?></a></div>
 		<div id="contests_list">
 			<?php
 			/** If allowed and if other contests exist, display a link to them. */
-			if (count($contests) > 1 and $settings->display_other_contests){
+			if (count($contests) > 1 and $settings->display_other_contests or $contest==$settings->default_contest and $settings->display_other_contests){
 				echo _('Other contests').' : ';
 				foreach ($contests as $cont => $cont_item){
 					if ($cont != $contest){
@@ -169,14 +197,4 @@ if ($settings){
 				?>
 			</section>
 		</div>
-		<?php } ?>
-		<script>
-			var noTiling = false;
-		</script>
-		<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-		<script type="text/javascript" src="js/lightbox.min.js"></script>
-		<script type="text/javascript" src="js/freetile0.3.1.js"></script>
-		<script type="text/javascript" src="js/noDuplicate.js"></script>
-		<script type="text/javascript" src="js/contest.js"></script>
-	</body>
-</html>
+		<?php } include "html/footer.html"; ?>

@@ -1,5 +1,5 @@
 <?php 
-DEFINE('SPC_VERSION', '2.0');
+DEFINE('SPC_VERSION', '3.0 Alpha 1');
 
 $sql=mysqli_query($bd, "SELECT * FROM settings");
 $settings = mysqli_fetch_object($sql);

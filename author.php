@@ -7,22 +7,22 @@
 		<link rel="stylesheet" href="css/spc.css" type="text/css" media="screen" />
 		<link rel="icon" type="image/png" href="favicon.png" />
 		<style type="text/css">
-			h1, h2{
-				color: #ff0056;
-				margin: 6px;
-			}
-			h1{
-				font-size: 60px;
-			}
-			dt{
-				color: #999;
-			}
-			dd, dl{
-				margin-left: 10px;
-			}
-			p{
-				margin-left: 10px;
-			}
+    h1, h2{
+      color: #ff0056;
+      margin: 6px;
+    }
+    h1{
+      font-size: 60px;
+    }
+    dt{
+      color: #999;
+    }
+    dd, dl{
+      margin-left: 10px;
+    }
+    p{
+      margin-left: 10px;
+    }
 		</style>
 	</head>
 	<body>
@@ -30,7 +30,7 @@
 		<?php
 		require("markdown.php");
 		$text = '';
-		$file_handle = fopen("README.md", "r");
+		$file_handle = fopen("CONTRIBUTORS.md", "r");
 		while (!feof($file_handle)) {
 		   $text .= fgets($file_handle);
 		}

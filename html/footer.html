@@ -1,0 +1,20 @@
+<div id="footer">
+  <a href="https://github.com/Dric/simple-photos-contest"><span class="fa fa-github githubIcon"></span></a> <a href="about.php" class=""><span class="colored">S</span>imple <span class="colored">P</span>hotos <span class="colored">C</span>ontest</a> <span class="colored"><a href="changelog.php"><span class="colored"><?php echo SPC_VERSION; ?></span></a></span> by <a href="author.php"><span class="colored">Contributors</span></a>.
+</div>
+<script>
+  var noTiling = false;
+</script>
+<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="js/lightbox.min.js"></script>
+<script type="text/javascript" src="js/freetile0.3.1.js"></script>
+<script type="text/javascript" src="js/noDuplicate.js"></script>
+<script type="text/javascript" src="js/contest.js"></script>
+<?php
+global $admin_logged;
+if ($admin_logged){
+	echo '<script type="text/javascript" src="js/admin.js"></script>
+<script type="text/javascript" src="js/jqBarGraph.1.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.tinyscrollbar.min.js"></script>';
+}?>
+</body>
+</html>

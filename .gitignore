@@ -161,3 +161,4 @@ pip-log.txt
 
 *.clpprj
 /config.php
+cache/*

@@ -5,16 +5,16 @@ A Simple photos contest gallery. Vote for your favorites photos.
 
 Screenshots
 -----------
-![Frontend 1](https://raw.github.com/Dric/simple-photos-contest/master/install/img/front1.jpg "Frontend 1")
+![Frontend 1](https://raw.github.com/50thomatoes50/simple-photos-contest/master/install/img/front1.jpg "Frontend 1")
 Look at the small cog icon in upper right corner : this is the settings button.
 
-![Frontend 2](https://raw.github.com/Dric/simple-photos-contest/master/install/img/front2.jpg "Frontend 2")
+![Frontend 2](https://raw.github.com/50thomatoes50/simple-photos-contest/master/install/img/front2.jpg "Frontend 2")
 Photos are automatically tiled. This can be a bit messy.
 
-![Admin 1](https://raw.github.com/Dric/simple-photos-contest/master/install/img/admin1.jpg "Admin 1")
+![Admin 1](https://raw.github.com/50thomatoes50/simple-photos-contest/master/install/img/admin1.jpg "Admin 1")
 Admin panel - Contests list.
 
-![Admin 2](https://raw.github.com/Dric/simple-photos-contest/master/install/img/admin2.jpg "Admin 2")
+![Admin 2](https://raw.github.com/50thomatoes50/simple-photos-contest/master/install/img/admin2.jpg "Admin 2")
 Admin panel - SPC settings bar.
 
 Requirements
@@ -36,7 +36,7 @@ Installation
 	2. Open the SPC url in your favorite browser.
 	3. You will be redirected to the SPC installer.
 	4. Follow the installer steps.
-* Manual install : 
+* Manual install :
 	1. Make the cache dir writable (777).
 	2. import install/install.sql in your mysql db.
 	3. Rename config-sample.php into config.php.
@@ -51,26 +51,10 @@ Run SQL commands :
     ALTER TABLE `contests` ADD `voting_type` VARCHAR( 10 ) NOT NULL DEFAULT "open" ;
     ALTER TABLE `image_ip` CHANGE `ip_add` `ip_add` INT NULL DEFAULT NULL;
 
-Changelog
----------
-* 2.0
-	- Major rewrite : frontend now use HTML5 and CSS3
-	- Used of LESS files to build CSS file
-	- Use fingerprinting method instead of IP address to detect if a visitor has already voted.
-	- ZebraDatePicker replaced by glDatePicker
-* 1.3
-	- `mysql_*` obsolete php functions replaced by `mysqli_*` functions.
-	- When `config.php` file is not found, user will be redirected to install script.
-	- Link to admin panel in breadcrumb
-	- When contests are saved in Db but no default contest is set, SPC will display the first contest saved in Db
-	- Better SQL error check
-	- A few bugs fixed
-	- Updated jQuery to v1.11.2
-	- Updated freeTile to v0.3.1
-	- Custom Slimbox2 replaced by LightBox
-* 1.2
-  - Use of SimpleImage class instead of TimThumb
-  - Add a setting to allow voting once in a contest or unlimited votes (you are still not allowed to vote more than once for a photo)
+Update to 3.x  alpha versions
+------------------------
+		Run SQL commands :
+	ALTER TABLE `contests` ADD `icon` VARCHAR(200) NOT NULL ;
 
 Quick Start
 -----------

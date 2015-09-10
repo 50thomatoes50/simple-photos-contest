@@ -14,7 +14,7 @@ $message = new stdClass;
 
 
 if (isset($_GET['tab']) and !empty($_GET['tab']) and $_GET['tab'] != 'stats'){
-	$tab = htmlspecialchars($_GET['tab']); 
+	$tab = htmlspecialchars($_GET['tab']);
 }else{
 	$tab = 'contests';
 }
@@ -69,9 +69,9 @@ if (isset($_GET['contest']) and !empty($_GET['contest']) and $tab == 'contests')
 			$contest = null;
 			break;
 		case 'update':
-			/** 
+			/**
 			* We update contest images.
-			* Images that are in db but not in directory are removed from db, and images not in db yet are added. 
+			* Images that are in db but not in directory are removed from db, and images not in db yet are added.
 			*/
 			$ok = true;
 			$i_added = $i_deleted = 0;
@@ -85,6 +85,45 @@ if (isset($_GET['contest']) and !empty($_GET['contest']) and $tab == 'contests')
 		    }
 				closedir($handle);
 		  }
+			$sql_i=mysqli_query($bd, 'SELECT `icon` FROM `contests` WHERE `contest` = \''.$contest."'" );
+			while($row=mysqli_fetch_array($sql_i)){
+				$icon = $row['icon'];
+			}
+			$icon_found = false;
+			foreach($allowed_ext as $ext)
+			{
+				if(file_exists ( $c_path.$contest.".".$ext ))
+				{
+					$icon_found = true;
+					$icon_f = $contest.".".$ext;
+					break;
+				}
+			}
+			$icon_msg = "error!";
+			if($icon_found){ //File
+				if($icon_f==$icon){
+					$icon_msg = "is ok";
+				}
+				else{
+					$sql_iu=mysqli_query($bd, 'UPDATE `spc`.`contests` SET `icon` = "'.$icon_f.'" WHERE `contests`.`contest` = \''.$contest."'" );
+					if($icon)
+						$icon_msg = "updated";
+					else {
+						$icon_msg = "added";
+					}
+				}
+
+			}
+			else{
+				if($icon){ //No file but db record
+					$sql_iu=mysqli_query($bd, 'UPDATE `spc`.`contests` SET `icon` = "" WHERE `contests`.`contest` = \''.$contest."'" );
+					$icon_msg = "deleted";
+				}
+				else{
+					$icon_msg = "don't exist";
+				}
+			}
+
 			$query = 'SELECT * FROM `images` WHERE `contest` = "'.$contest.'" ORDER BY `img_name`';
 			$sql_query=mysqli_query($bd, $query);
 			while($row=mysqli_fetch_array($sql_query)){
@@ -115,7 +154,7 @@ if (isset($_GET['contest']) and !empty($_GET['contest']) and $tab == 'contests')
 					}
 				}
 			}
-			
+
 			if ($ok){
 				$s_a = $s_d = '';
 				if ($i_added ==0 or $i_added > 1){
@@ -124,13 +163,13 @@ if (isset($_GET['contest']) and !empty($_GET['contest']) and $tab == 'contests')
 				if ($i_deleted ==0 or $i_deleted > 1){
 					$s_d = 's';
 				}
-				$message->text = sprintf(_('%s contest photos updated !'), $contest).'<br /> <small>('.sprintf(ngettext('%s photo added', '%s photos added', $i_added), $i_added).' '.sprintf(ngettext('%s photo deleted', '%s photos deleted', $i_deleted), $i_deleted).')</small>';
+				$message->text = sprintf(_('%s contest photos updated !'), $contest).'<br /> <small>('.sprintf(ngettext('%s photo added', '%s photos added', $i_added), $i_added).' '.sprintf(ngettext('%s photo deleted', '%s photos deleted', $i_deleted), $i_deleted).', Icon '.$icon_msg.')</small>';
 				$message->type = 'success';
 			}else{
 				$message->text = sprintf(_('Error : I couldn\'t update photos for %s contest !'), $contest);
 				$message->type = 'error';
 			}
-			$contest = null;	
+			$contest = null;
 			break;
 		case 'add':
 			/** We add contest in db. */
@@ -205,7 +244,7 @@ if (isset($_GET['contest']) and !empty($_GET['contest']) and $tab == 'contests')
 }
 
 if (isset($_POST['action']) and $_POST['action'] == 'settings_save'){
-	
+
 	/** Let's deal with settings saving ! */
 	/** Settings are on one row. If this row is present, then we update it. If not, we create it. */
 	if (!empty($settings)){
@@ -217,18 +256,18 @@ if (isset($_POST['action']) and $_POST['action'] == 'settings_save'){
 	$error = mysqli_error($bd);
 	/** Get number of rows affected. If equal to 0, it means that the settings has not been saved. */
 	$nb = mysqli_affected_rows($bd);
-	
+
 	/** reloading settings now. */
 	$sql=mysqli_query($bd, "SELECT * FROM settings");
 	$settings = mysqli_fetch_object($sql);
-	
+
 	/** Language could have changed, let's reset it. */
 	putenv("LC_ALL=".$settings->language);
 	setlocale(LC_ALL, $settings->language);
 	bindtextdomain("messages", "lang");
 	bind_textdomain_codeset('messages', 'UTF-8');
 	textdomain("messages");
-	
+
 	/** Notification message, processed after language reset. */
 	if ($nb > 0){
 		$message->text = _('Settings updated !');
@@ -294,7 +333,7 @@ function settings_tab($message = null){
 		</div>
 		<div class="input_group">
 			<label><?php echo _('Language'); ?> </label>
-			<select name="language" id="language"> 
+			<select name="language" id="language">
 			<?php
 			$languages = array();
 			$languages[] = 'en_US.utf8';
@@ -321,7 +360,7 @@ function settings_tab($message = null){
 		</div>
 		<div class="input_group">
 			<label><?php echo _('Date format'); ?> </label>
-			<select name="date_format" id="date_format"> 
+			<select name="date_format" id="date_format">
 			<?php
 			$formats = array('d/m/Y', 'm/d/Y', 'Y/m/d');
 
@@ -337,7 +376,7 @@ function settings_tab($message = null){
 		</div>
 		<div class="input_group">
 			<label><?php echo _('Default contest'); ?> </label>
-			<select name="default_contest" id="default_contest"> 
+			<select name="default_contest" id="default_contest">
 			<?php
 			$contests = array();
 			$sql=mysqli_query($bd, "SELECT contest FROM contests");
@@ -359,7 +398,7 @@ function settings_tab($message = null){
 			</select> <?php echo info_disp(_('Select one the registered contests in db to be the default contest displayed in frontend.')); ?>
 		</div>
 		<div class="form_buttons">
-			<input type="submit" class="btn_primary" value="<?php echo _('Save'); ?>" id="save" name="save" /> 
+			<input type="submit" class="btn_primary" value="<?php echo _('Save'); ?>" id="save" name="save" />
 			<input type="hidden" name="action" value="settings_save"/>
 		</div>
 	</form>
@@ -381,7 +420,7 @@ function contest_tab($c_path, $contest = null, $message = null){
 	if (!empty($contest) and !isset($contests[$contest])){
 		$contest = null;
 	}
-	/** Display contests added in filesystem but not in db. */ 
+	/** Display contests added in filesystem but not in db. */
 	if (empty($contest)){
 	  if ($handle = opendir($c_path)) {
 	    while (false !== ($entry = readdir($handle))) {
@@ -394,7 +433,7 @@ function contest_tab($c_path, $contest = null, $message = null){
 	      }
 	    }
 	    closedir($handle);
-	  } 
+	  }
 	}
 	if (empty($contest)){
 		admin_header('Contests', $contest, $message);
@@ -442,13 +481,13 @@ function contest_tab($c_path, $contest = null, $message = null){
 		}
 		?>
 	</div>
-	<?php 
+	<?php
 	} elseif (isset($_GET['action']) and $_GET['action'] == 'stats'){
-		/** Contest stats. */ 
+		/** Contest stats. */
 		admin_header('Stats', $contest, $message);
 		contest_stats($contest);
 	} else {
-		/** Contest settings. */ 
+		/** Contest settings. */
 		$cont = $contests[$contest];
 		admin_header('Contests', $contest, $message);
 	?>
@@ -482,11 +521,11 @@ function contest_tab($c_path, $contest = null, $message = null){
         </select>
 			</div>
 			<div class="form_buttons">
-				<input type="submit" class="btn_primary" value="<?php echo _('Save'); ?>" id="save" name="save" /> 
+				<input type="submit" class="btn_primary" value="<?php echo _('Save'); ?>" id="save" name="save" />
 				<input type="submit" value="<?php echo _('Delete'); ?>" id="del" name="del" />
 			</div>
 		</form>
-	<?php 
+	<?php
 	}
 	admin_footer();
 }
@@ -535,24 +574,5 @@ function admin_header($tab, $sub = null, $message = null){
 }
 
 function admin_footer(){
-	global $settings;
-	?>
-				</div>
-				<div class="push"></div>
-				</div>
-				<div id="footer">
-					<a href="https://github.com/Dric/simple-photos-contest"><span class="fa fa-github githubIcon"></span></a> <a href="about.php" class=""><span class="colored">S</span>imple <span class="colored">P</span>hotos <span class="colored">C</span>ontest</a> <span class="colored"><?php echo SPC_VERSION; ?></span> by <a href="http://www.driczone.net"><span class="colored">Dric</span></a>.
-				</div>
-			<script>
-				var noTiling = true;
-			</script>
-			<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-			<script type="text/javascript" src="js/lightbox.min.js"></script>
-			<script type="text/javascript" src="js/jqBarGraph.1.1.min.js"></script>
-			<script type="text/javascript" src="js/jquery.tinyscrollbar.min.js"></script>
-			<script type="text/javascript" src="js/contest.js"></script>
-			<script type="text/javascript" src="js/admin.js"></script>
-	</body>
-</html>
-	<?php
+	include "html/footer.html";
 }

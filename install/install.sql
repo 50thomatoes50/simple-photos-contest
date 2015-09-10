@@ -8,6 +8,7 @@ CREATE TABLE `contests` (
   `date_begin` date NOT NULL,
   `date_end` date NOT NULL,
   `voting_type` varchar(10) NOT NULL,
+  `icon` varchar(200) NOT NULL,
   UNIQUE KEY `contest` (`contest`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
