@@ -1,63 +1,61 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Simple-photos-contest by Dric</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta charset="UTF-8">
+    <title>Simple-photos-contest by 50thomatoes50</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Simple-photos-contest</h1>
-        <p>A simple photo contest gallery written in PHP</p>
+    <section class="page-header">
+      <h1 class="project-name">Simple-photos-contest</h1>
+      <h2 class="project-tagline">A simple photo contest gallery written in PHP</h2>
+      <a href="https://github.com/50thomatoes50/simple-photos-contest" class="btn">View on GitHub</a>
+      <a href="https://github.com/50thomatoes50/simple-photos-contest/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/50thomatoes50/simple-photos-contest/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-        <p class="view"><a href="https://github.com/Dric/simple-photos-contest">View the Project on GitHub <small>Dric/simple-photos-contest</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/Dric/simple-photos-contest/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/Dric/simple-photos-contest/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/Dric/simple-photos-contest">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1><a href="https://github.com/Dric/simple-photos-contest">Simple Photos Contest</a></h1>
+    <section class="main-content">
+      <h1>
+<a id="simple-photos-contest" class="anchor" href="#simple-photos-contest" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://github.com/Dric/simple-photos-contest">Simple Photos Contest</a>
+</h1>
 
 <p>A Simple photos contest gallery. Vote for your favorites photos.</p>
 
-<h2>Screenshots</h2>
+<h2>
+<a id="screenshots" class="anchor" href="#screenshots" aria-hidden="true"><span class="octicon octicon-link"></span></a>Screenshots</h2>
 
-<p><img src="https://raw.github.com/Dric/simple-photos-contest/master/install/img/front1.jpg" alt="Frontend 1" title="Frontend 1">
+<p><img src="https://raw.github.com/50thomatoes50/simple-photos-contest/master/install/img/front1.jpg" alt="Frontend 1" title="Frontend 1">
 Look at the small cog icon in upper right corner : this is the settings button.</p>
 
-<p><img src="https://raw.github.com/Dric/simple-photos-contest/master/install/img/front2.jpg" alt="Frontend 2" title="Frontend 2">
+<p><img src="https://raw.github.com/50thomatoes50/simple-photos-contest/master/install/img/front2.jpg" alt="Frontend 2" title="Frontend 2">
 Photos are automatically tiled. This can be a bit messy.</p>
 
-<p><img src="https://raw.github.com/Dric/simple-photos-contest/master/install/img/admin1.jpg" alt="Admin 1" title="Admin 1">
+<p><img src="https://raw.github.com/50thomatoes50/simple-photos-contest/master/install/img/admin1.jpg" alt="Admin 1" title="Admin 1">
 Admin panel - Contests list.</p>
 
-<p><img src="https://raw.github.com/Dric/simple-photos-contest/master/install/img/admin2.jpg" alt="Admin 2" title="Admin 2">
+<p><img src="https://raw.github.com/50thomatoes50/simple-photos-contest/master/install/img/admin2.jpg" alt="Admin 2" title="Admin 2">
 Admin panel - SPC settings bar.</p>
 
-<h2>Requirements</h2>
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
 
 <ul>
-<li>PHP 5.2</li>
+<li>PHP 5.3</li>
 <li>MySQL 5.5</li>
 <li>Gettext enabled (for translations)</li>
 <li>GD Image Library</li>
-</ul><p>There is nothing unusual, as GD and gettext are enabled on most of web hosting platforms. Simple Photos Contest may work with previous versions of PHP and MySQL, but it hasn't been tested.</p>
+</ul>
 
-<p>Runs well on IE 8+, FF, Opera, Chrome (and probably Safari, but it hasn't been tested). Javascript is required.</p>
+<p>There is nothing unusual, as GD and gettext are enabled on most of web hosting platforms. Simple Photos Contest may work with previous versions of MySQL, but it hasn't been tested.</p>
 
-<h2>Installation</h2>
+<p>Runs well on a decent Internet Browser that support HTML5. Javascript is required.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
 
 <ul>
 <li>Automatic install (recommended)
@@ -69,7 +67,7 @@ Admin panel - SPC settings bar.</p>
 <li>Follow the installer steps.</li>
 </ol>
 </li>
-<li>Manual install : 
+<li>Manual install :
 
 <ol>
 <li>Make the cache dir writable (777).</li>
@@ -79,48 +77,83 @@ Admin panel - SPC settings bar.</p>
 <li>Configure SPC in admin panel.</li>
 </ol>
 </li>
-</ul><h2>Quick Start</h2>
+</ul>
+
+<h2>
+<a id="update-from-1x-versions" class="anchor" href="#update-from-1x-versions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Update from 1.x versions</h2>
+
+<p>Run SQL commands :</p>
+
+<pre><code>ALTER TABLE `contests` ADD `voting_type` VARCHAR( 10 ) NOT NULL DEFAULT "open" ;
+ALTER TABLE `image_ip` CHANGE `ip_add` `ip_add` INT NULL DEFAULT NULL;
+</code></pre>
+
+<h2>
+<a id="update-to-3x--alpha-versions" class="anchor" href="#update-to-3x--alpha-versions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Update to 3.x  alpha versions</h2>
+
+<pre><code>    Run SQL commands :
+ALTER TABLE `contests` ADD `icon` VARCHAR(200) NOT NULL ;
+</code></pre>
+
+<h2>
+<a id="quick-start" class="anchor" href="#quick-start" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick Start</h2>
 
 <ul>
 <li>Create directory in your photos dir.</li>
 <li>Put your photos into this dir.</li>
 <li>Activate it in admin panel.</li>
-<li>The first load of a contest page is slow. No panic, it's because TimThumb needs to create thumbnails of all the gallery photos. The next load will be a lot faster !</li>
-</ul><h2>FAQ</h2>
+<li>The first load of a contest page is slow. No panic, it's because SPC needs to create thumbnails of all the gallery photos. The next load will be a lot faster !</li>
+</ul>
+
+<h2>
+<a id="faq" class="anchor" href="#faq" aria-hidden="true"><span class="octicon octicon-link"></span></a>FAQ</h2>
 
 <dl>
-<dt>Where is the admin panel ?</dt>
+    <dt>Where is the admin panel ?</dt>
     <dd>There is small icon in upper right corner of the main page. Just click on it, enter password and you will get the admin panel.</dd>
     <dt>How can I translate Simple Photos contest ?</dt>
     <dd>There is a pot template file in lang dir. Edit it with a po editor like [PoEdit](http://www.poedit.net) in Windows, then mimic the french translation files tree.</dd>
-</dl><h2>TO-DO</h2>
+    <dt>How can I change SPC CSS ?</dt>
+  <dd>You should modify SPC LESS files (check `variables.less` first, as most of colors and sizes are defined here) and compile it to a CSS file.</dd>
+</dl>
+
+<h2>
+<a id="to-do" class="anchor" href="#to-do" aria-hidden="true"><span class="octicon octicon-link"></span></a>TO-DO</h2>
 
 <ul>
-<li>Display stats in frontend (with setting to disable it)</li>
-</ul><h2>Components used</h2>
+<li>Use of responsive template</li>
+<li>Use of HTML5 + CSS3 to replace jQuery animations</li>
+</ul>
+
+<h2>
+<a id="components-used" class="anchor" href="#components-used" aria-hidden="true"><span class="octicon octicon-link"></span></a>Components used</h2>
 
 <ul>
 <li>
-<a href="http://www.binarymoon.co.uk/projects/timthumb/">TimThumb</a> 2.8.11</li>
+<a href="https://github.com/claviska/SimpleImage">SimpleImage</a> 2.4</li>
 <li>
-<a href="http://jquery.com">jQuery</a> 1.8.2</li>
+<a href="http://jquery.com">jQuery</a> 1.11.2</li>
 <li>
-<a href="https://github.com/yconst/Freetile">Freetile</a> (customized)</li>
+<a href="https://github.com/yconst/Freetile">Freetile</a> 0.3.1</li>
 <li>
-<a href="http://www.digitalia.be/software/slimbox2">SlimBox 2.04</a> (customized)</li>
+<a href="http://lokeshdhakar.com/projects/lightbox2">Lightbox</a> 2.7.1</li>
 <li>
-<a href="http://stefangabos.ro/jquery/zebra-datepicker/">Zebra DatePicker</a> 1.6.2</li>
+<a href="http://glad.github.io/glDatePicker">glDatePicker</a> 2.0</li>
 <li>
 <a href="http://workshop.rs/jqbargraph/">jqBarGraph</a> 1.1</li>
 <li>
 <a href="http://baijs.nl/tinyscrollbar/">Tiny Scrollbar</a> 1.81</li>
-</ul><h2>Bug tracker</h2>
+</ul>
+
+<h2>
+<a id="bug-tracker" class="anchor" href="#bug-tracker" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bug tracker</h2>
 
 <p>Have a bug? Being shocked by a poor translation (I'm french) ? Please create an issue here on GitHub !</p>
 
 <p><a href="https://github.com/Dric/simple-photos-contest/issues">https://github.com/Dric/simple-photos-contest/issues</a></p>
 
-<h2>Author</h2>
+<h2>
+<a id="author" class="anchor" href="#author" aria-hidden="true"><span class="octicon octicon-link"></span></a>Author</h2>
 
 <p><strong>Dric</strong></p>
 
@@ -131,13 +164,16 @@ Admin panel - SPC settings bar.</p>
 </li>
 <li>Github : <a href="http://github.com/Dric">http://github.com/Dric</a>
 </li>
-</ul><h2>Copyright and license</h2>
+</ul>
+
+<h2>
+<a id="copyright-and-license" class="anchor" href="#copyright-and-license" aria-hidden="true"><span class="octicon octicon-link"></span></a>Copyright and license</h2>
 
 <p>Simple Photos Contest is released under MIT licence.</p>
 
 <p>The MIT License (MIT)</p>
 
-<p>Copyright (c) 2012 Dric</p>
+<p>Copyright (c) 2012-2015 Dric</p>
 
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
 to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
@@ -147,13 +183,15 @@ and to permit persons to whom the Software is furnished to do so, subject to the
 
 <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/Dric">Dric</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/50thomatoes50/simple-photos-contest">Simple-photos-contest</a> is maintained by <a href="https://github.com/50thomatoes50">50thomatoes50</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
+
+    </section>
+
+  
   </body>
 </html>
