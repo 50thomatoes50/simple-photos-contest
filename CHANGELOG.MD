@@ -4,6 +4,16 @@ Simple Photos Contest
 ChangeLog
 --------
 
+* 3.0 Alpha 2
+  - Theme (Change color of variable.less and recompile it in the admin panel)
+  - Move included file to a secure folder
+  - updated AwesomeFont to 4.4
+  - LogOut bouton for admin page
+  - SteamAuthentication added
+  - fixed an exploit (can vote whenever a contest is expired)
+  - Installer can upgrade the db when upgrading SPC
+  - Automatic language selector (not tested)
+
 * 3.0 Alpha 1
   - You can add icon to a gallery
   - Added a proper main page

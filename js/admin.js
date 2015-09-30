@@ -20,5 +20,26 @@ $(function() {
 	/** Settings panel scrollbar */
 	$('#settings_wrap').tinyscrollbar({ axis: 'y', sizethumb: 120, wheel: 20});
 
+	function logout_ajax(){
+		var dataString = 'action=logout' ;
+		$.ajax({
+			type: "POST",
+			url: "ajax_love.php",
+			data: dataString,
+			cache: false,
+			success: function(data)	{
+				if (data.indexOf('<div class="alert error">') != -1){
+					$('#login').prepend(data);
+				}else{
+					location.href = 'index.php';
+				}
+			}
+		});
+		return false;
+	}
+
+	$('#logout').click(function(){
+		logout_ajax();
+	});
 
 });

@@ -1,13 +1,22 @@
 <?php
-if (!file_exists('config.php')){
+if (!file_exists('include/config.php')){
 	header('Location:install/install.php');
 }
-include('config.php');
-include('functions.php');
+/*if(file_exists('include/config.php') and file_exists('install/install.php'))
+	die("<h1>Remove 'install/install.php'</h1>")*/
+include('include/config.php');
+include('include/functions.php');
 if ($settings){
+
+	if($settings->auth_method == 1)
+		require 'include/steamauth/steamauth.php';
+
 	if (isset($_GET['contest']) and !empty($_GET['contest'])){
-		$contest = htmlspecialchars($_GET['contest']);
+		$contest = mysqli_real_escape_string($bd,htmlspecialchars($_GET['contest']));
 	}else{
+		if($settings->homepage)
+		$contest = null;
+		else
 		$contest = $settings->default_contest;
 	}
 	$contests = array();
@@ -23,7 +32,7 @@ if ($settings){
 }
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $settings->language; ?>">
+<html lang="<?php echo getenv ( "LC_ALL" ) ?>">
   <head>
     <title><?php echo sprintf($settings->contests_name, $contest); ?></title>
     <meta charset="UTF-8">
@@ -40,6 +49,15 @@ if ($settings){
 	<body>
 		<div id="settings-button">
 			<?php
+			if($settings->auth_method == 1){
+				if(!isset($_SESSION['steamid'])) {
+						echo "<div class='steamlogin' style='width: 198px;'>".steamlogin()."</div>"; //login button
+				}  else {
+						include ('include/steamauth/userInfo.php');
+						//Protected content
+						echo "<a class='steamlogin' href='user.php' title='Steam user'><i class='fa fa-steam'></i><img src='".$steamprofile['avatar']."' title='' alt='' />" . $steamprofile['personaname'] ."</a><a href='logout.php' title='Logout'><i class='fa fa-sign-out'> </i></a>";
+				}
+			}
 			if ($admin_logged){
 				?>
 			<a href="admin.php" title="<?php echo _('settings'); ?>"><span class="fa fa-cog" title="<?php echo _('settings'); ?>"></span></a>
@@ -156,7 +174,7 @@ if ($settings){
             }
 						// If Image thumbnail doesn't exists or if the max_value has changed, we (re)create the thumbnail
             if (!file_exists($thumb_url) or ($width != $max_value and $height != $max_value)){
-              include_once('SimpleImage.php');
+              include_once('include/SimpleImage.php');
               $img_thumb = new SimpleImage($img_url);
               $img_thumb->best_fit($max_value, $max_value);
 	            // If contest thumbnail folder doesn't exists, we create it

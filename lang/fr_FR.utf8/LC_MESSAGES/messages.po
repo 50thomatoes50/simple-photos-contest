@@ -123,7 +123,7 @@ msgid ""
 "variable is replaced by the contest name and must be present."
 msgstr ""
 "C'est le petit texte afficher en entête de la page d'un concours. La "
-"varaible %s sera remplacée par le nom du concours, et doit être présente "
+"variable %s sera remplacée par le nom du concours, et doit être présente "
 "dans la chaîne."
 
 #: ../../../admin.php:277

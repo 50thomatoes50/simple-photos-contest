@@ -53,6 +53,20 @@ $result = new stdClass;
 	<body>
 		<div id="wrap">
 			<?php
+			if (file_exists('./../include/config.php')){ ?>
+				<h1>Not Welcome to Simple Photos Contest Installer</h1>
+				<form class="large" method="POST" action="../index.php">
+					<p><em>This installer will be displayed in english only</em>.</p>
+					<p>If you are not not the system administrator please click on the 'back' button to exit this page</p>
+					<p>Admin, You have to delete the <i>install</i> folder or delete <i>include/config.php</i> if you want to reset the configuration</p>
+					<div class="form_buttons">
+						<input type="submit" value="Back" name="submit"/>
+					</div>
+				</form>
+				<?php
+				$step = -1;
+			}
+
 			switch ($step){
 				case 0:
 					?>
@@ -264,7 +278,7 @@ $result = new stdClass;
 							}
 						}
 						/** Import sql install file (http://shinephp.com/php-code-to-execute-mysql-script/) */
-						
+
 						@trigger_error("");
 						$f = @fopen('install.sql',"r");
 						if (!$f){
@@ -380,7 +394,7 @@ $result = new stdClass;
 						</div>
 						<div class="input_group">
 							<label>Language</label>
-							<select name="s_language" id="s_language"> 
+							<select name="s_language" id="s_language">
 							<?php
 							$languages = array();
 							$languages[] = 'en_US.utf8';
@@ -407,7 +421,7 @@ $result = new stdClass;
 						</div>
 						<div class="input_group">
 							<label>Date format</label>
-							<select name="s_date_format" id="s_date_format"> 
+							<select name="s_date_format" id="s_date_format">
 							<?php
 							$formats = array('d/m/Y', 'm/d/Y', 'Y/m/d');
 							foreach($formats as $format){
@@ -532,7 +546,7 @@ $result = new stdClass;
 	          }
 						/** To reset last php error (if any) */
 						@trigger_error("");
-			      $file_temp = @fopen('./../config.php', 'x');
+			      $file_temp = @fopen('./../include/config.php', 'x');
 						if (!$file_temp){
 							$error = error_get_last();
 							$err_tab = explode(': ', $error['message'], 2);
@@ -543,7 +557,7 @@ $result = new stdClass;
 							foreach ($config_array as $line){
 								$ret = fwrite($file_temp, $line);
 								if (!$ret){
-									$_SESSION['message'] .= '<div class="alert error">Unable to write into config.php file. It may be an insuffisant access rights problem.</div>';
+									$_SESSION['message'] .= '<div class="alert error">Unable to write into include/config.php file. It may be an insuffisant access rights problem.</div>';
 									$result->ok = false;
 									break;
 								}
@@ -551,7 +565,7 @@ $result = new stdClass;
 				      fclose($file_temp);
 							$_SESSION['message'] .= '<div class="alert success">The config.php file was successfully created !</div>';
 						}
-			      
+
 						?>
 						<h1>Install : Creating config file</h1>
 						<form class="large" method="POST" action="install.php">
@@ -587,9 +601,9 @@ $result = new stdClass;
 					$result->ok = true;
 					$result->message = '';
 					if (isset($_POST['submit'])){
-						$f = @fopen('./../config.php',"r");
+						$f = @fopen('./../include/config.php',"r");
 						if (!$f){
-							$result->message = '<div class="alert error">Unable to open config.php file. Please verify that you have this file at the SPC root dir.</div>';
+							$result->message = '<div class="alert error">Unable to open include/config.php file. Please verify that you have this file at the SPC root dir.</div>';
 							$result->ok = false;
 						}
 					}
@@ -626,9 +640,9 @@ $result = new stdClass;
 /**
 * Used to generate a salt key.
 * @param int $length Length of the returned string
-* 
+*
 */
-function generateRandomString($length = 40) {    
+function generateRandomString($length = 40) {
     return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#@&$*%?-+="), 0, $length);
 }
 ?>

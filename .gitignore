@@ -162,3 +162,6 @@ pip-log.txt
 *.clpprj
 /config.php
 cache/*
+photos/
+/include/config.php
+/include/steamauth/settings.php

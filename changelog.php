@@ -28,7 +28,7 @@
 	<body>
 		<div id="wrap">
 		<?php
-		require("markdown.php");
+		require("include/markdown.php");
 		$text = '';
 		$file_handle = fopen("CHANGELOG.MD", "r");
 		while (!feof($file_handle)) {

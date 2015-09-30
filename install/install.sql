@@ -25,7 +25,7 @@ CREATE TABLE `images` (
 CREATE TABLE `image_IP` (
   `ip_id` int(11) NOT NULL AUTO_INCREMENT,
   `img_id_fk` int(11) DEFAULT NULL,
-  `ip_add` int(11) DEFAULT NULL,
+  `ip_add` BIGINT DEFAULT NULL,
   `contest` varchar(200) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`ip_id`),
   KEY `img_id_fk` (`img_id_fk`),
@@ -40,9 +40,14 @@ CREATE TABLE `settings` (
   `max_length` int(11) NOT NULL DEFAULT '600',
   `language` varchar(15) NOT NULL,
   `date_format` varchar(10) NOT NULL,
-  `default_contest` varchar(200) DEFAULT NULL
+  `default_contest` varchar(200) DEFAULT NULL,
+  `language_auto` BOOLEAN NOT NULL,
+  `homepage` BOOLEAN NOT NULL,
+  `auth_method` INT(2) NOT NULL,
+  `spc_version` VARCHAR(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+UPDATE `settings` SET `spc_version`="3.0 A2" WHERE 1
 
 ALTER TABLE `images`
   ADD CONSTRAINT `images_ibfk_1` FOREIGN KEY (`contest`) REFERENCES `contests` (`contest`) ON DELETE CASCADE ON UPDATE CASCADE;

@@ -1,9 +1,10 @@
 <?php
-include('config.php');
-include('functions.php');
+include('include/config.php');
+include('include/functions.php');
 
 /** Prevent unauthorized access to admin panel. */
 if (!$admin_logged){
+	header('HTTP/1.0 403 Forbidden');
 	die('Nice tried, but your are not logged in.');
 }
 
@@ -248,9 +249,9 @@ if (isset($_POST['action']) and $_POST['action'] == 'settings_save'){
 	/** Let's deal with settings saving ! */
 	/** Settings are on one row. If this row is present, then we update it. If not, we create it. */
 	if (!empty($settings)){
-		$sql = 'UPDATE settings SET contests_name="'.htmlspecialchars($_POST['contests_name']).'", gallery_only = '.intval((isset($_POST['gallery_only']))?1:0).', contest_disp_title="'.htmlspecialchars($_POST['contest_disp_title']).'", display_other_contests='.intval((isset($_POST['display_other_contests']))?1:0).', max_length='.intval($_POST['max_length']).', language="'.htmlspecialchars($_POST['language']).'", date_format="'.htmlspecialchars($_POST['date_format']).'", default_contest="'.htmlspecialchars($_POST['default_contest']).'"';
+		$sql = 'UPDATE settings SET contests_name="'.htmlspecialchars($_POST['contests_name']).'", gallery_only = '.intval((isset($_POST['gallery_only']))?1:0).', contest_disp_title="'.htmlspecialchars($_POST['contest_disp_title']).'", display_other_contests='.intval((isset($_POST['display_other_contests']))?1:0).', max_length='.intval($_POST['max_length']).', language="'.htmlspecialchars($_POST['language']).'", date_format="'.htmlspecialchars($_POST['date_format']).'", default_contest="'.htmlspecialchars($_POST['default_contest']).'", language_auto='.intval((isset($_POST['language_auto']))?1:0).', homepage='.intval((isset($_POST['homepage']))?1:0).', auth_method='.intval($_POST['auth_method']).';';
 	}else{
-		$sql = 'INSERT INTO settings values ("'.htmlspecialchars($_POST['contests_name']).'", '.intval((isset($_POST['gallery_only']))?1:0).', "'.htmlspecialchars($_POST['contest_disp_title']).'", '.intval((isset($_POST['display_other_contests']))?1:0).', '.intval($_POST['max_length']).', "'.htmlspecialchars($_POST['language']).'", "'.htmlspecialchars($_POST['date_format']).'", "'.htmlspecialchars($_POST['default_contest']).'")';
+		$sql = 'INSERT INTO settings values ("'.htmlspecialchars($_POST['contests_name']).'", '.intval((isset($_POST['gallery_only']))?1:0).', "'.htmlspecialchars($_POST['contest_disp_title']).'", '.intval((isset($_POST['display_other_contests']))?1:0).', '.intval($_POST['max_length']).', "'.htmlspecialchars($_POST['language']).'", "'.htmlspecialchars($_POST['date_format']).'", "'.htmlspecialchars($_POST['default_contest']).'",'.intval($_POST['language_auto']).'", homepage='.intval((isset($_POST['homepage']))?1:0).', auth_method='.intval($_POST['auth_method']).')';
 	}
 	$res = mysqli_query($bd, $sql);
 	$error = mysqli_error($bd);
@@ -332,6 +333,21 @@ function settings_tab($message = null){
 			<input type="text" name="max_length" id="max_length" value="<?php echo (isset($settings->max_length)) ? $settings->max_length : '600'; ?>" />px <?php echo info_disp(_('This value is the max width or height of thumbnails, depending of the biggest side of the photo.')); ?>
 		</div>
 		<div class="input_group">
+			<label><?php echo "Automatic language" ?> </label>
+			<?php
+			if(isset($settings->language_auto)){
+				if ($settings->language_auto){
+					$checked = 'checked';
+				}else{
+					$checked = '';
+				}
+			}else{
+				$checked = '';
+			}
+			?>
+			<input type="checkbox" name="language_auto" id="language_auto" <?php echo $checked; ?> /> <?php echo info_disp("Select the language from the client header. If the client language is not available, fallback to the selected language below"); ?>
+		</div>
+		<div class="input_group">
 			<label><?php echo _('Language'); ?> </label>
 			<select name="language" id="language">
 			<?php
@@ -375,6 +391,21 @@ function settings_tab($message = null){
 			</select> <?php echo info_disp(_('The date format is the same as php date format. d = days, m = months, Y = year (4 digits).')); ?>
 		</div>
 		<div class="input_group">
+			<label><?php echo "Little homepage" ?> </label>
+			<?php
+			if(isset($settings->homepage)){
+				if ($settings->homepage){
+					$checked = 'checked';
+				}else{
+					$checked = '';
+				}
+			}else{
+				$checked = '';
+			}
+			?>
+			<input type="checkbox" name="homepage" id="homepage" <?php echo $checked; ?> /> <?php echo info_disp("If no galery is selected, a list of current galery is shown"); ?>
+		</div>
+		<div class="input_group">
 			<label><?php echo _('Default contest'); ?> </label>
 			<select name="default_contest" id="default_contest">
 			<?php
@@ -396,6 +427,22 @@ function settings_tab($message = null){
 			}
 			?>
 			</select> <?php echo info_disp(_('Select one the registered contests in db to be the default contest displayed in frontend.')); ?>
+		</div>
+		<div class="input_group">
+			<label>Authentification method</label>
+			<select name="auth_method" id="auth_method">
+			<?php
+			$choices = array('Fingerprint', 'Steam');
+
+			foreach($choices as $key => $c){
+				?> <option value="<?php echo $key.'\"';
+					if ($key == $settings->auth_method){
+					?>selected<?php
+				}
+				?>><?php echo $c; ?></option><?php
+			}
+			?>
+			</select> <?php echo info_disp(_('The date format is the same as php date format. d = days, m = months, Y = year (4 digits).')); ?>
 		</div>
 		<div class="form_buttons">
 			<input type="submit" class="btn_primary" value="<?php echo _('Save'); ?>" id="save" name="save" />
@@ -556,6 +603,8 @@ function admin_header($tab, $sub = null, $message = null){
 			<div id="admin_wrap">
 				<div id="settings_bar">
 					<a href="#" title="<?php echo _('General settings'); ?>" id="settings_disp"><span class="fa fa-sliders win8Icon" title="<?php echo _('General settings'); ?>"></span></a>
+					<a href="css/theme.php" class="settings_bar_bouton" tiptitle="Customize"><i class="fa fa-paint-brush win8Icon"></i></a>
+					<a href="#" id="logout" class="settings_bar_bouton" tiptitle="Logout"><i class="fa fa-sign-out win8Icon"></i></a>
 					<div id="settings_wrap">
 						<h1><?php echo _('General settings'); ?></h1>
 						<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>

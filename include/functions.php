@@ -1,9 +1,87 @@
-<?php 
-DEFINE('SPC_VERSION', '3.0 Alpha 1');
+<?php
+DEFINE('SPC_VERSION', '3.0 Alpha 2');
+DEFINE('SPC_VERSION_DB', '3.0 A2');
 
 $sql=mysqli_query($bd, "SELECT * FROM settings");
 $settings = mysqli_fetch_object($sql);
 unset($sql);
+
+function parseLanguageList($languageList) {
+    if (is_null($languageList)) {
+        if (!isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            return array();
+        }
+        $languageList = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+    }
+    $languages = array();
+    $languageRanges = explode(',', trim($languageList));
+    foreach ($languageRanges as $languageRange) {
+        if (preg_match('/(\*|[a-zA-Z0-9]{1,8}(?:-[a-zA-Z0-9]{1,8})*)(?:\s*;\s*q\s*=\s*(0(?:\.\d{0,3})|1(?:\.0{0,3})))?/', trim($languageRange), $match)) {
+            if (!isset($match[2])) {
+                $match[2] = '1.0';
+            } else {
+                $match[2] = (string) floatval($match[2]);
+            }
+            if (!isset($languages[$match[2]])) {
+                $languages[$match[2]] = array();
+            }
+            $languages[$match[2]][] = strtolower($match[1]);
+        }
+    }
+    krsort($languages);
+    return $languages;
+}
+
+// compare two parsed arrays of language tags and find the matches
+function findMatches($accepted, $available) {
+    $matches = array();
+    $any = false;
+    foreach ($accepted as $acceptedQuality => $acceptedValues) {
+        $acceptedQuality = floatval($acceptedQuality);
+        if ($acceptedQuality === 0.0) continue;
+        foreach ($available as $availableQuality => $availableValues) {
+            $availableQuality = floatval($availableQuality);
+            if ($availableQuality === 0.0) continue;
+            foreach ($acceptedValues as $acceptedValue) {
+                if ($acceptedValue === '*') {
+                    $any = true;
+                }
+                foreach ($availableValues as $availableValue) {
+                    $matchingGrade = matchLanguage($acceptedValue, $availableValue);
+                    if ($matchingGrade > 0) {
+                        $q = (string) ($acceptedQuality * $availableQuality * $matchingGrade);
+                        if (!isset($matches[$q])) {
+                            $matches[$q] = array();
+                        }
+                        if (!in_array($availableValue, $matches[$q])) {
+                            $matches[$q][] = $availableValue;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if (count($matches) === 0 && $any) {
+        $matches = $available;
+    }
+    krsort($matches);
+    return $matches;
+}
+
+function selectLanguage($avail,$client){
+	if(count($client)==0)
+		return $avail[0];
+	$lang="";$val=0;
+	foreach($client as $key => $lc){
+		foreach($avail as $a){
+			if($a[0]==$lc[0][0] and $a[1]==$lc[0][1])
+				if(floatval($key)>$val){
+	        $val=$key;$lang=$a;
+	      }
+			}
+	}
+	return $lang;
+}
 
 if (!empty($settings)){
 	/** Translations ! */
@@ -12,8 +90,21 @@ if (!empty($settings)){
 	*
 	* To see the locales installed in your ubuntu server, type locale -a in shell.
 	*/
+	if($settings->language_auto)
+{
+		$langs = array(
+        'en-US',// default
+        'fr-FR',);
+$accepted = parseLanguageList($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+$lang_selected = selectLanguage($langs, $accepted);
+		putenv("LC_ALL=".$lang_selected);
+		setlocale(LC_ALL, $lang_selected);
+	}
+else {
 	putenv("LC_ALL=".$settings->language);
 	setlocale(LC_ALL, $settings->language);
+}
+
 	bindtextdomain("messages", "lang");
 	bind_textdomain_codeset('messages', 'UTF-8');
 	textdomain("messages");
@@ -40,7 +131,7 @@ function date_formatting($mysql_date, $to_sql = false){
 		return changeDateFormat($mysql_date, $settings->date_format, 'Y-m-d');
   }
 }
-/** For php version < 5.3 
+/** For php version < 5.3
 * http://php.net/manual/en/function.date.php#90423
 */
 function dateParseFromFormat($stFormat, $stData)
@@ -48,7 +139,7 @@ function dateParseFromFormat($stFormat, $stData)
      $aDataRet = array('day'=>0, 'month'=>0, 'year'=>0, 'hour'=>0, 'minute'=>0, 'second'=>0);
      $aPieces = preg_split('[:/.\ \-]', $stFormat);
      $aDatePart = preg_split('[:/.\ \-]', $stData);
-     foreach($aPieces as $key=>$chPiece)    
+     foreach($aPieces as $key=>$chPiece)
      {
          switch ($chPiece)
          {
@@ -56,40 +147,40 @@ function dateParseFromFormat($stFormat, $stData)
              case 'j':
                  $aDataRet['day'] = $aDatePart[$key];
                  break;
-                 
+
              case 'F':
              case 'M':
              case 'm':
              case 'n':
                  $aDataRet['month'] = $aDatePart[$key];
                  break;
-                 
+
              case 'o':
              case 'Y':
              case 'y':
                  $aDataRet['year'] = $aDatePart[$key];
                  break;
-             
+
              case 'g':
              case 'G':
              case 'h':
              case 'H':
                  $aDataRet['hour'] = $aDatePart[$key];
-                 break;    
-                 
+                 break;
+
              case 'i':
                  $aDataRet['minute'] = $aDatePart[$key];
                  break;
-                 
+
              case 's':
                  $aDataRet['second'] = $aDatePart[$key];
-                 break;            
+                 break;
          }
-         
+
      }
      return $aDataRet;
  }
- 
+
  function changeDateFormat($stDate,$stFormatFrom,$stFormatTo)
  {
    // When PHP 5.3.0 becomes available to me
@@ -106,7 +197,7 @@ function dateParseFromFormat($stFormat, $stData)
 
 /**
 * Valide une date suivant un format.
-* 
+*
 * @param string $date Date à valider
 * @param string $format Format que doit avoir la date à valider
 */
@@ -121,7 +212,7 @@ function date_valid($date, $format = null) {
        return false;
    }
  }
- 
+
 /**
  * Permet de savoir si l'admin est connecté.
  *
@@ -155,7 +246,7 @@ function info_disp($message){
 /**
 * Display a vertical bar graph with contest votes.
 * @param string $contest Contest ID
-* 
+*
 */
 function contest_stats($contest){
 	global $settings, $c_path, $bd;

@@ -58,6 +58,9 @@ Update to 3.x  alpha versions
 ------------------------
 		Run SQL commands :
 	ALTER TABLE `contests` ADD `icon` VARCHAR(200) NOT NULL ;
+	ALTER TABLE `settings` ADD `language_auto` BOOLEAN NOT NULL ;
+	ALTER TABLE `settings` ADD `homepage` BOOLEAN NOT NULL ;
+	ALTER TABLE `settings` ADD `auth_method` INT(2) NOT NULL , ADD `spc_version` VARCHAR(8) NOT NULL ;
 
 Quick Start
 -----------
@@ -95,6 +98,10 @@ Components used
 + [glDatePicker](http://glad.github.io/glDatePicker) 2.0
 + [jqBarGraph](http://workshop.rs/jqbargraph/) 1.1
 + [Tiny Scrollbar](http://baijs.nl/tinyscrollbar/) 1.81
++ [less.php](http://lessphp.gpeasy.com/) 1.7.0.5
++ [Font Awesome](http://fortawesome.github.io/Font-Awesome/) 4.4.0
++ [SteamAuthentication](https://github.com/SmItH197/SteamAuthentication)
+
 
 Bug tracker
 -----------

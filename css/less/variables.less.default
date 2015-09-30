@@ -4,15 +4,15 @@
 // Colors
 
 // Background color
-@backgroundColor: #000000;
+@backgroundColor: #000;
 // Background color of boxes
 @boxBackgroundColor: #303030;
 // Default text color
-@textColor: #666666;
+@textColor: #666;
 // Color of text in photos captions
-@captionColor: #999999;
+@captionColor: #999;
 // Color of links
-@linkColor: #ffffff;
+@linkColor: #FFF;
 @linkHoverColor:  darken(@linkColor, 10%);
 // Colored color
 @loveColor: #ff0056;
@@ -21,10 +21,10 @@
 @successColor: @linkColor;
 @successBackgroundColor: @loveColor;
 
-@errorColor: #333333;
+@errorColor: #333;
 @errorBackgroundColor: @captionColor;
 
-@formInputColor: #cccccc;
+@formInputColor: #CCC;
 
 // Font sizes
 
@@ -45,3 +45,5 @@
 
 // Alerts
 @alertFontSize: 1.4em;
+
+
