@@ -3,7 +3,7 @@
 
 A Simple photos contest gallery. Vote for your favorites photos.
 
-50thomatoes50's fork ![Version-3.0 Alpha 1](https://img.shields.io/badge/Version-3.0%20Alpha%201-brightgreen.svg "Version-3.0 Alpha 1")
+50thomatoes50's fork ![Version-3.0 Alpha 3](https://img.shields.io/badge/Version-3.0%20Alpha%203-brightgreen.svg "Version-3.0 Alpha 3")
 ![MIT License](https://img.shields.io/github/license/50thomatoes50/simple-photos-contest.svg "MIT License")
 
 Screenshots
@@ -56,11 +56,23 @@ Run SQL commands :
 
 Update to 3.x  alpha versions
 ------------------------
-		Run SQL commands :
-	ALTER TABLE `contests` ADD `icon` VARCHAR(200) NOT NULL ;
-	ALTER TABLE `settings` ADD `language_auto` BOOLEAN NOT NULL ;
-	ALTER TABLE `settings` ADD `homepage` BOOLEAN NOT NULL ;
-	ALTER TABLE `settings` ADD `auth_method` INT(2) NOT NULL , ADD `spc_version` VARCHAR(8) NOT NULL ;
+
+### New method
+
+- Always make a backup (files and SQL Database)
+- Delete all files and directory that is not named "photos"
+- Put the new file in
+- Go to %yoursite%/install/upgrade.php with a browser
+- Click 'Upgrade' and done
+
+### Old method (not safe at all)
+
+Run those SQL commands :
+
+		ALTER TABLE `contests` ADD `icon` VARCHAR(200) NOT NULL ;
+		ALTER TABLE `settings` ADD `language_auto` BOOLEAN NOT NULL ;
+		ALTER TABLE `settings` ADD `homepage` BOOLEAN NOT NULL ;
+		ALTER TABLE `settings` ADD `auth_method` INT(2) NOT NULL , ADD `spc_version` VARCHAR(8) NOT NULL ;
 
 Quick Start
 -----------
@@ -94,7 +106,7 @@ Components used
 + [SimpleImage](https://github.com/claviska/SimpleImage) 2.4
 + [jQuery](http://jquery.com) 1.11.2
 + [Freetile](https://github.com/yconst/Freetile) 0.3.1
-+ [Lightbox](http://lokeshdhakar.com/projects/lightbox2) 2.7.1
++ [Lightbox](http://lokeshdhakar.com/projects/lightbox2) 2.8.1
 + [glDatePicker](http://glad.github.io/glDatePicker) 2.0
 + [jqBarGraph](http://workshop.rs/jqbargraph/) 1.1
 + [Tiny Scrollbar](http://baijs.nl/tinyscrollbar/) 1.81

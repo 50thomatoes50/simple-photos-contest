@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ChAngelog SimplePhotosContest</title>
+    <title>Changelog SimplePhotosContest</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="css/spc.css" type="text/css" media="screen" />
@@ -26,6 +26,7 @@
 		</style>
 	</head>
 	<body>
+    <div id="header"><a tiptitle="Back" href="index.php"><span class="fa fa-arrow-circle-o-left"></span></a><a href="">Changelog</a></div>
 		<div id="wrap">
 		<?php
 		require("include/markdown.php");

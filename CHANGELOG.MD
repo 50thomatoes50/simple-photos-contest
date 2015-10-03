@@ -4,6 +4,11 @@ Simple Photos Contest
 ChangeLog
 --------
 
+* 3.0 Alpha 3
+  - Updated lightbox to latest version
+  - Added missing images file for lightbox
+  - Fixed "Lightbox is bugged #8"
+
 * 3.0 Alpha 2
   - Theme (Change color of variable.less and recompile it in the admin panel)
   - Move included file to a secure folder

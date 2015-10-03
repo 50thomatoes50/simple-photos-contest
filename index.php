@@ -208,7 +208,7 @@ if ($settings){
 						<?php }	?>
 						<div class="photo-title"><?php echo (strlen($img_name) > (int)round($width/12)) ? substr($img_name, 0, round($width/11)).'&hellip;':$img_name; ?></div>
 					</div>
-					<a href="<?php echo $img_url; ?>" title="<?php echo $img_name; ?>" data-lightbox="<?php echo $img_id; ?>" data-title="<?php echo $img_name; ?>" class=""><img alt="<?php echo $img_name; ?>" class="img" src="<?php echo $thumb_url; ?>" /></a>
+					<a href="<?php echo $img_url; ?>" title="<?php echo $img_name; ?>" data-lightbox="<?php echo $contest; ?>" data-title="<?php echo $img_name; ?>" class=""><img alt="<?php echo $img_name; ?>" class="img" src="<?php echo $thumb_url; ?>" /></a>
 				</article>
 				<?php
 					}

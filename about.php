@@ -26,6 +26,7 @@
 		</style>
 	</head>
 	<body>
+    <div id="header"><a tiptitle="Back" href="index.php"><span class="fa fa-arrow-circle-o-left"></span></a><a href="">About</a></div>
 		<div id="wrap">
 		<?php
 		require("include/markdown.php");
