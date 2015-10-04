@@ -47,7 +47,7 @@ require 'include/steamauth/steamauth.php';
 <div id="contest_table" class="table">					<ul class="item_wrap active">
 						<li class="item_title"><a tiptitle="Account Info" href=""><i class="fa fa-info-circle"></i> Account Info</a><br></li>
             <br>
-              <table border='1'>
+              <table border='1' class="user">
                 <tr><td>Steam ID</td><td><?php echo $steamprofile['steamid']; ?></td></tr>
                 <tr><td>Steam Profile</td><td><?php
 if($steamprofile['profilestate']==1)
@@ -92,19 +92,21 @@ switch($steamprofile['personastate']){
 					</ul>
 					<ul class="item_wrap active">
 						<li class="item_title"><a tiptitle="Vote" href=".?contest=test"><i class="fa fa-heart"></i> Vote</a></li>
-<table border='1'>
+<table border='1' class="user">
 <?php
 $contests = array();
+$contestsicon = array();
 $imgs = array();
 $vote= array();
 $ip = array();
-$sql=mysqli_query($bd, "SELECT `contest`,`contest_name` FROM contests");
+$sql=mysqli_query($bd, "SELECT `contest`,`contest_name`,`icon` FROM contests");
 while($row=mysqli_fetch_array($sql)){
 	$contests[$row['contest']] = $row['contest_name'];
+	$contestsicon[$row['contest']] = $row['icon'];
 }
-$sql=mysqli_query($bd, "SELECT `img_id`,`img_name` FROM images");
+$sql=mysqli_query($bd, "SELECT `img_id`,`img_name`,`img_url` FROM images");
 while($row=mysqli_fetch_array($sql)){
-	$imgs[$row['img_id']] = $row['img_name'];
+	$imgs[$row['img_id']] = array($row['img_name'] , $row['img_url']);
 }
   //$ip_sql=mysqli_query($bd, "select ip_add from image_IP where img_id_fk=$id and ip_add='$ip'");
 $ip_sql=mysqli_query($bd, "SELECT img_id_fk,contest FROM image_IP WHERE ip_add='".$steamprofile['steamid']."'");
@@ -112,10 +114,11 @@ while($row=mysqli_fetch_array($ip_sql)){
 	$ip[$row['contest']] = $row['img_id_fk'];
 }
 foreach($contests as $key=> $contest){
+	$tiptile = $contestsicon[$key]=="" ? $contest : "<img src='photos/".$contestsicon[$key]."' alt='".$contest."'>" ;
 	if(!isset($ip[$key]))
-		echo "<tr><td><a href='index.php?contest=".$key."'>".$contest."</a></td><td>no vote</td></tr>";
+		echo "<tr><td><a href='index.php?contest=".$key."' title=\"".$tiptile."\">".$contest."</a></td><td>no vote</td></tr>";
 	else {
-		echo "<tr><td><a href='index.php?contest=".$key."'>".$contest."</a></td><td>voted : ".$imgs[$ip[$key]]."</td></tr>";
+		echo "<tr><td><a href='index.php?contest=".$key."' title=\"".$tiptile."\">".$contest."</a></td><td>voted : <a title=\"<img src='cache/".$contest."/".$imgs[$ip[$key]][1]."' alt='".$imgs[$ip[$key]][0]."'>\" href='photos/".$contest."/".$imgs[$ip[$key]][1]."' data-lightbox='".$contest."' data-title='".$imgs[$ip[$key]][0]."' class=''>".$imgs[$ip[$key]][0]."</a></td></tr>";
 	}
 }
 

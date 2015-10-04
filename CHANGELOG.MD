@@ -4,6 +4,12 @@ Simple Photos Contest
 ChangeLog
 --------
 
+* 3.0 Alpha 5
+  - Enhancement of the user page
+    - Table padding Added
+    - Image preview for votes (gallery and voted)
+
+
 * 3.0 Alpha 4
   - Fixed some install bug
     - Used an incorrect path for config-sample.php
@@ -55,7 +61,7 @@ ChangeLog
 	- Updated freeTile to v0.3.1
 	- Custom Slimbox2 replaced by LightBox
 
-  
+
 * 1.2
   - Use of SimpleImage class instead of TimThumb
   - Add a setting to allow voting once in a contest or unlimited votes (you are still not allowed to vote more than once for a photo)

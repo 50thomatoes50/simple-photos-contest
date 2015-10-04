@@ -1,5 +1,5 @@
 <?php
-DEFINE('SPC_VERSION', '3.0 Alpha 4');
+DEFINE('SPC_VERSION', '3.0 Alpha 5');
 DEFINE('SPC_VERSION_DB', '3.0 A2');
 
 $sql=mysqli_query($bd, "SELECT * FROM settings");
