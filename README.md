@@ -3,7 +3,7 @@
 
 A Simple photos contest gallery. Vote for your favorites photos.
 
-50thomatoes50's fork ![Version-3.0 Alpha 3](https://img.shields.io/badge/Version-3.0%20Alpha%203-brightgreen.svg "Version-3.0 Alpha 3")
+50thomatoes50's fork ![Version-3.0 Alpha 4](https://img.shields.io/badge/Version-3.0%20Alpha%204-brightgreen.svg "Version-3.0 Alpha 4")
 ![MIT License](https://img.shields.io/github/license/50thomatoes50/simple-photos-contest.svg "MIT License")
 
 Screenshots

@@ -47,7 +47,7 @@ CREATE TABLE `settings` (
   `spc_version` VARCHAR(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-UPDATE `settings` SET `spc_version`="3.0 A2" WHERE 1
+UPDATE `settings` SET `spc_version`="3.0 A2" WHERE 1;
 
 ALTER TABLE `images`
   ADD CONSTRAINT `images_ibfk_1` FOREIGN KEY (`contest`) REFERENCES `contests` (`contest`) ON DELETE CASCADE ON UPDATE CASCADE;

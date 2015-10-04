@@ -107,8 +107,8 @@ while($row=mysqli_fetch_array($sql)){
 	$imgs[$row['img_id']] = $row['img_name'];
 }
   //$ip_sql=mysqli_query($bd, "select ip_add from image_IP where img_id_fk=$id and ip_add='$ip'");
-$ip_sql=mysqli_query($bd, "select img_id_fk,contest from image_IP where ip_add='".$steamprofile['steamid']."'");
-while($row=mysqli_fetch_array($sql)){
+$ip_sql=mysqli_query($bd, "SELECT img_id_fk,contest FROM image_IP WHERE ip_add='".$steamprofile['steamid']."'");
+while($row=mysqli_fetch_array($ip_sql)){
 	$ip[$row['contest']] = $row['img_id_fk'];
 }
 foreach($contests as $key=> $contest){

@@ -59,7 +59,7 @@ if (isset($_GET['contest']) and !empty($_GET['contest']) and $tab == 'contests')
 			break;
 		case 'reset':
 			$sql0=mysqli_query($bd, 'UPDATE images SET love = 0 WHERE contest = "'.$contest.'"');
-			$sql1=mysqli_query($bd, 'DELETE FROM image_ip WHERE contest = "'.$contest.'"');
+			$sql1=mysqli_query($bd, 'DELETE FROM image_IP WHERE contest = "'.$contest.'"');
 			if ($sql0 and $sql1){
 				$message->text = sprintf(_('Votes for %s contest reinitialized !'), $contest);
 				$message->type = 'success';
@@ -460,7 +460,8 @@ function contest_tab($c_path, $contest = null, $message = null){
 		$contests[$row['contest']] = (object)array(	'contest_name'=> $row['contest_name'],
 																								'description' => $row['description'],
 																								'date_begin'	=> $row['date_begin'],
-																								'date_end'		=> $row['date_end']
+																								'date_end'		=> $row['date_end'],
+																								'voting_type'		=> $row['voting_type']
 																							);
 	}
 	/** Prevent trying to display settings of deleted or non-existant contests. */
@@ -563,8 +564,8 @@ function contest_tab($c_path, $contest = null, $message = null){
       <div class="input_group">
 				<label><?php echo _('Voting'); ?> : </label>
 				<select name="voting_type" id="voting_type" value="<?php echo $cont->voting_type; ?>" >
-          <option value="contest"><?php echo _('Only one vote per contest'); ?></option>
-          <option value="open"><?php echo _('Unlimited'); ?></option>
+          <option value="contest" <?php if($cont->voting_type=="contest") echo"selected"; ?>><?php echo _('Only one vote per contest'); ?></option>
+          <option value="open"  <?php if($cont->voting_type=="open") echo"selected"; ?>><?php echo 'Only one vote per user'; ?></option>
         </select>
 			</div>
 			<div class="form_buttons">

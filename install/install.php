@@ -53,7 +53,7 @@ $result = new stdClass;
 	<body>
 		<div id="wrap">
 			<?php
-			if (file_exists('./../include/config.php')){ ?>
+			if (file_exists('./../include/config.php') && $step!=7){ ?>
 				<h1>Not Welcome to Simple Photos Contest Installer</h1>
 				<form class="large" method="POST" action="../index.php">
 					<p><em>This installer will be displayed in english only</em>.</p>
@@ -509,7 +509,7 @@ $result = new stdClass;
 							}
 						}
 						/** Write settings in DB */
-						$sql = 'INSERT INTO settings values("'.$_SESSION['s_contests_name'].'", '.((empty($_SESSION['s_gallery_only'])) ? 0 : 1 ).', "'.$_SESSION['s_contest_disp_title'].'", '.((empty($_SESSION['s_display_other_contests'])) ? 0 : 1).', '.$_SESSION['s_max_length'].', "'.$_SESSION['s_language'].'", "'.$_SESSION['s_date_format'].'", NULL)';
+						$sql = 'INSERT INTO settings values("'.$_SESSION['s_contests_name'].'", '.((empty($_SESSION['s_gallery_only'])) ? 0 : 1 ).', "'.$_SESSION['s_contest_disp_title'].'", '.((empty($_SESSION['s_display_other_contests'])) ? 0 : 1).', '.$_SESSION['s_max_length'].', "'.$_SESSION['s_language'].'", "'.$_SESSION['s_date_format'].'", NULL, 0, 0, 0, "3.0 A2")';
 						$res = mysqli_query($bd, $sql);
 				    if (!$res) {
 				      $sqlErrorCode = mysqli_errno($bd);
@@ -519,7 +519,7 @@ $result = new stdClass;
 				    }
 						$_SESSION['message'] .= $result->message;
 						$config_array = array();
-						$sample_file = file('./../config-sample.php', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES );
+						$sample_file = file('./../include/config-sample.php', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES );
 	          foreach ($sample_file as $line) {
 	            if (stristr($line, '$mysql_hostname =')){
 	              $line = '$mysql_hostname = "'.$_SESSION['db_host'].'";';
@@ -563,7 +563,13 @@ $result = new stdClass;
 								}
 							}
 				      fclose($file_temp);
-							$_SESSION['message'] .= '<div class="alert success">The config.php file was successfully created !</div>';
+							if(filesize ( './../include/config.php')<1 or filesize ( './../include/config.php') == NULL  )
+							{
+								$_SESSION['message'] .= '<div class="alert error">Unable to write into include/config.php file. It may be an insuffisant access rights problem (File is empty).</div>';
+								$result->ok = false;
+							}
+							else
+								$_SESSION['message'] .= '<div class="alert success">The config.php file was successfully created !</div>';
 						}
 
 						?>

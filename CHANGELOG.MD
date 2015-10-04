@@ -4,10 +4,21 @@ Simple Photos Contest
 ChangeLog
 --------
 
+* 3.0 Alpha 4
+  - Fixed some install bug
+    - Used an incorrect path for config-sample.php
+    - Added a message when the config.php file is generated but empty
+    - Forgot a ";" in install.sql
+  - Fixed a bug when reseting votes
+  - Fixed Vote type in admin not selecting the correct voting type
+  - Fixed user page always showing "didn't vote"
+
+
 * 3.0 Alpha 3
   - Updated lightbox to latest version
   - Added missing images file for lightbox
   - Fixed "Lightbox is bugged #8"
+
 
 * 3.0 Alpha 2
   - Theme (Change color of variable.less and recompile it in the admin panel)
@@ -19,16 +30,20 @@ ChangeLog
   - Installer can upgrade the db when upgrading SPC
   - Automatic language selector (not tested)
 
+
 * 3.0 Alpha 1
   - You can add icon to a gallery
   - Added a proper main page
   - Added some button to go back to main page
+
 
 * 2.0
 	- Major rewrite : frontend now use HTML5 and CSS3
 	- Used of LESS files to build CSS file
 	- Use fingerprinting method instead of IP address to detect if a visitor has already voted.
 	- ZebraDatePicker replaced by glDatePicker
+
+
 * 1.3
 	- `mysql_*` obsolete php functions replaced by `mysqli_*` functions.
 	- When `config.php` file is not found, user will be redirected to install script.
@@ -39,6 +54,8 @@ ChangeLog
 	- Updated jQuery to v1.11.2
 	- Updated freeTile to v0.3.1
 	- Custom Slimbox2 replaced by LightBox
+
+  
 * 1.2
   - Use of SimpleImage class instead of TimThumb
   - Add a setting to allow voting once in a contest or unlimited votes (you are still not allowed to vote more than once for a photo)
